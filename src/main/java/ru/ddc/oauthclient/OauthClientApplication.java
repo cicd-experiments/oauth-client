@@ -6,7 +6,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class OauthClientApplication {
 
-    public static void main(String[] args) {
+    protected OauthClientApplication() {
+
+    }
+
+    /**
+     * Main method of application.
+     * @param args input arguments of application
+     */
+    public static void main(final String[] args) {
         SpringApplication.run(OauthClientApplication.class, args);
     }
 
