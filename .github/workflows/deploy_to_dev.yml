@@ -19,6 +19,28 @@ jobs:
           key: "${{ runner.os }}-m2-checksytle-${{ hashFiles('**/pom.xml') }}"
       - name: Run Checkstyle
         run: ./mvnw checkstyle:check
+  test:
+    environment: develop
+    permissions:
+      contents: read
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Make maven wrapper executable
+        run: chmod +x mvnw
+      - name: Cache maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: "${{ runner.os }}-m2-test-${{ hashFiles('**/pom.xml') }}"
+      - name: Run test
+        run: ./mvnw -B test --file pom.xml
 
 
 
