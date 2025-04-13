@@ -32,14 +32,13 @@ jobs:
           KC_HTTP_ENABLED: true
           KC_BOOTSTRAP_ADMIN_USERNAME: admin
           KC_BOOTSTRAP_ADMIN_PASSWORD: pass
+          KC_HEALTH_ENABLED: true
         ports:
           - 8090:8080
           - 8091:9000
         volumes:
           - /workspace/src/main/resources/keycloak:/opt/keycloak/data/import
-        options: |
-          --name keycloak
-          --health-enabled=true
+        options: --name keycloak
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
