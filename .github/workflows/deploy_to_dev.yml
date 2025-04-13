@@ -33,15 +33,17 @@ jobs:
           KC_BOOTSTRAP_ADMIN_USERNAME: admin
           KC_BOOTSTRAP_ADMIN_PASSWORD: pass
         ports:
-          - "8090:8080"
+          - 8090:8080
         volumes:
           - /workspace/src/main/resources/keycloak:/opt/keycloak/data/import
-        options: --name keycloak --import-realm
+        options: >-
+          start-dev --import-realm
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: List repository content
         run: ls -la -R ./src/main/resources
+#      - name: Import realm
 #      - name: Set up JDK
 #        uses: actions/setup-java@v4
 #        with:
