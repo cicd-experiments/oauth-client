@@ -29,7 +29,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Run Keycloak container
         run: |
-          docker run -d --name testkeycloak \
+          docker run -d \
+          --name testkeycloak \
           -p 8090:8080 -p 9000:9000 \
           -e KC_HTTP_PORT=8080 \
           -e KC_BOOTSTRAP_ADMIN_USERNAME=admin \
@@ -40,7 +41,7 @@ jobs:
           start-dev --import-realm
       - name: Healthcheck
         run: |
-          curl --head -fsS http://localhost:9000/health
+          curl --head -fsS http://testkeycloak:9000/health
 
 #      - name: Inspect container
 #        run: docker container inspect keycloak
