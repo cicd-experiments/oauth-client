@@ -40,8 +40,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: List repository content
-        run: ls -la -R ./src/main/resources
+      - name: Inspect container
+        run: docker container inspect keycloak
 #      - name: Import realm
 #      - name: Set up JDK
 #        uses: actions/setup-java@v4
