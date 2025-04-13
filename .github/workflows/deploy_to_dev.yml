@@ -36,8 +36,7 @@ jobs:
           - 8090:8080
         volumes:
           - /workspace/src/main/resources/keycloak:/opt/keycloak/data/import
-        options: >-
-          start-dev --import-realm
+        options: --name keycloak
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
