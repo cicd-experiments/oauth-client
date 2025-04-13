@@ -36,7 +36,7 @@ jobs:
           - "8090:8080"
         volumes:
           - /workspace/src/main/resources/keycloak:/opt/keycloak/data/import
-        options: --name keycloak
+        options: --name keycloak --import-realm
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -54,9 +54,9 @@ jobs:
 #        with:
 #          path: ~/.m2/repository
 #          key: "${{ runner.os }}-m2-test-${{ hashFiles('**/pom.xml') }}"
-      - name: Setup Keycloak realm
-        run: |
-          docker exec -i keycloak bash "/opt/keycloak/bin/kc.sh show-config"
+#      - name: Setup Keycloak realm
+#        run: |
+#          docker exec -i keycloak bash "/opt/keycloak/bin/kc.sh show-config"
 #        run: |
 #          docker exec -it keycloak sh -c
 #          "/opt/jboss/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password admin &&
