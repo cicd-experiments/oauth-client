@@ -43,7 +43,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: List repository content
-        run: ls -r -la
+        run: ls -la -R
 #      - name: Set up JDK
 #        uses: actions/setup-java@v4
 #        with:
