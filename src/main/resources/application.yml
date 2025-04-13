@@ -1,18 +1,16 @@
 spring:
   application:
     name: oauth-client
-  profiles:
-    active: dev
   security:
     oauth2:
       client:
         registration:
           iam-tool:
             client-id: ${OAUTH_CLIENT_ID}
-            client-name: ${OAUTH_CLIENT_NAME}
-            client-secret: ${OAUTH_CLIENT_SECRET}
+#            client-name: ${OAUTH_CLIENT_NAME}
+#            client-secret: ${OAUTH_CLIENT_SECRET}
             provider: keycloak
-            client-authentication-method: client_secret_basic
+#            client-authentication-method: client_secret_basic
             redirect-uri: ${OAUTH_CLIENT_REDIRECT_URI}
             scope:
               - openid
