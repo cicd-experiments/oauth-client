@@ -53,7 +53,9 @@ jobs:
 #        with:
 #          path: ~/.m2/repository
 #          key: "${{ runner.os }}-m2-test-${{ hashFiles('**/pom.xml') }}"
-#      - name: Setup Keycloak realm
+      - name: Setup Keycloak realm
+        run: |
+          docker exec -it keycloak sh -c "/opt/keycloak/bin/kc.sh show-config"
 #        run: |
 #          docker exec -it keycloak sh -c
 #          "/opt/jboss/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password admin &&
