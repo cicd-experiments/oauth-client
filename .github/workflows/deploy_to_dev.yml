@@ -24,26 +24,28 @@ jobs:
     permissions:
       contents: read
     runs-on: ubuntu-22.04
-    services:
-      keycloak:
-        image: keycloak/keycloak:26.1
-        env:
-          KC_HTTP_PORT: 8080
-          KC_HTTP_ENABLED: true
-          KC_BOOTSTRAP_ADMIN_USERNAME: admin
-          KC_BOOTSTRAP_ADMIN_PASSWORD: pass
-          KC_HEALTH_ENABLED: true
-        ports:
-          - 8090:8080
-          - 8091:9000
-        volumes:
-          - /workspace/src/main/resources/keycloak:/opt/keycloak/data/import
-        options: --name keycloak
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Inspect container
-        run: docker container inspect keycloak
+      - name: Inspect repo
+        run: ls -la
+
+#      - name: Run Keycloak container
+#        run: |
+#          docker run \
+#            --name testkeycloak \
+#            -p 8090:8080 \
+#            -p 9000:9000 \
+#            -e KC_HTTP_PORT=8080
+#            -e KC_BOOTSTRAP_ADMIN_USERNAME=admin \
+#            -e KC_BOOTSTRAP_ADMIN_PASSWORD=pass \
+#            -e KC_HEALTH_ENABLED=true \
+#            -v /workspace/src/main/resources/keycloak:/opt/keycloak/data/import \
+#            keycloak/keycloak:26.1 \
+#            start-dev --import-realm
+
+#      - name: Inspect container
+#        run: docker container inspect keycloak
 #      - name: Import realm
 #      - name: Set up JDK
 #        uses: actions/setup-java@v4
