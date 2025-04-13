@@ -37,7 +37,9 @@ jobs:
           - 8091:9000
         volumes:
           - /workspace/src/main/resources/keycloak:/opt/keycloak/data/import
-        options: --name keycloak --health-enabled=true
+        options: |
+          --name keycloak
+          --health-enabled=true
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
