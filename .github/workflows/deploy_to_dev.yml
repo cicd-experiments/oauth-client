@@ -30,7 +30,8 @@ jobs:
       - name: Run Keycloak container
         run: |
           docker run -d --name testkeycloak -p 8090:8080 -p 9000:9000 -e KC_HTTP_PORT=8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=pass -e KC_HEALTH_ENABLED=true -v /src/main/resources/keycloak:/opt/keycloak/data/import \
-          keycloak/keycloak:26.1 start-dev --import-realm
+          keycloak/keycloak:26.1 \
+          start-dev --import-realm
 
 #      - name: Inspect container
 #        run: docker container inspect keycloak
