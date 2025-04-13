@@ -39,12 +39,12 @@ jobs:
           -v /src/main/resources/keycloak:/opt/keycloak/data/import \
           keycloak/keycloak:26.1 \
           start-dev --import-realm
-      - name: Healthcheck
-        run: |
-          curl --head -fsS http://testkeycloak:9000/health
+#      - name: Healthcheck
+#        run: |
+#          curl --head -fsS http://localhost:9000/health
 
-#      - name: Inspect container
-#        run: docker container inspect keycloak
+      - name: Inspect container
+        run: docker container inspect testkeycloak
 #      - name: Import realm
 #      - name: Set up JDK
 #        uses: actions/setup-java@v4
