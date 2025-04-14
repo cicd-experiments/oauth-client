@@ -51,6 +51,10 @@ jobs:
             sleep 5
           done
 
+      - name: Check realm.json
+        run: |
+          cat /src/main/resources/keycloak/realm.json
+
       - name: Check well-known
         run: |
           curl http://localhost:8090/realms/testrealm/.well-known/openid-configuration
