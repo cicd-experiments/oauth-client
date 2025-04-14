@@ -54,29 +54,20 @@ jobs:
             sleep 5
           done
 
-#      - name: Import realm
-#      - name: Set up JDK
-#        uses: actions/setup-java@v4
-#        with:
-#          java-version: '17'
-#          distribution: 'temurin'
-#      - name: Make maven wrapper executable
-#        run: chmod +x mvnw
-#      - name: Cache maven packages
-#        uses: actions/cache@v3
-#        with:
-#          path: ~/.m2/repository
-#          key: "${{ runner.os }}-m2-test-${{ hashFiles('**/pom.xml') }}"
-#      - name: Setup Keycloak realm
-#        run: |
-#          docker exec -i keycloak bash "/opt/keycloak/bin/kc.sh show-config"
-#        run: |
-#          docker exec -it keycloak sh -c
-#          "/opt/jboss/keycloak/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password admin &&
-#          /opt/jboss/keycloak/bin/kcadm.sh create realms -s realm=testrealm -s enabled=true &&
-#          /opt/jboss/keycloak/bin/kcadm.sh create partialImport -r testrealm -s ifResourceExists=SKIP -o -f /src/main/resources/keycloak/realm.json"
-#      - name: Run test
-#        run: ./mvnw -B test --file pom.xml
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Make maven wrapper executable
+        run: chmod +x mvnw
+      - name: Cache maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: "${{ runner.os }}-m2-test-${{ hashFiles('**/pom.xml') }}"
+      - name: Run test
+        run: ./mvnw -B test --file pom.xml
 
 
 
