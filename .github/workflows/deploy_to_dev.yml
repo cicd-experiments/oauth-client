@@ -67,7 +67,11 @@ jobs:
           path: ~/.m2/repository
           key: "${{ runner.os }}-m2-test-${{ hashFiles('**/pom.xml') }}"
       - name: Run test
-        run: ./mvnw -B "-DOAUTH_CLIENT_ISSUER_URI=testclient" test --file pom.xml
+        run: |
+          ./mvnw -B \
+          "-DOAUTH_CLIENT_ISSUER_URI=testclient" \
+          "-DOAUTH_CLIENT_ID=testclient" \
+          test --file pom.xml
 
 
 
