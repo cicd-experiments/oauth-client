@@ -51,6 +51,10 @@ jobs:
             sleep 5
           done
 
+      - name: ls -la
+        run: |
+          ls -la
+
       - name: Check realm.json
         run: |
           cat /workspace/src/main/resources/keycloak/realm.json
