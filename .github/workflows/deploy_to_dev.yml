@@ -40,9 +40,6 @@ jobs:
           keycloak/keycloak:26.1 \
           start-dev --import-realm
 
-      - name: Inspect container
-        run: docker container inspect testkeycloak
-
       - name: Wait for Keycloak to be ready
         run: |
           for i in {1..30}; do
@@ -69,7 +66,7 @@ jobs:
       - name: Run test
         run: |
           ./mvnw -B \
-          "-DOAUTH_CLIENT_ISSUER_URI=http://localhost:8090" \
+          "-DOAUTH_CLIENT_ISSUER_URI=http://localhost:8090/realms/testrealm/.well-known/openid-configuration" \
           test --file pom.xml
 
 
