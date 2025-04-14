@@ -43,9 +43,16 @@ jobs:
       - name: Inspect container
         run: docker container inspect testkeycloak
 
-      - name: Healthcheck
+      - name: Wait for Keycloak to be ready
         run: |
-          curl --head -fsS http://localhost:9000/health
+          for i in {1..30}; do
+            if curl -s http://localhost:9000/health > /dev/null; then
+              echo "Keycloak is ready!"
+              break
+            fi
+            echo "Waiting for Keycloak to start..."
+            sleep 5
+          done
 
 #      - name: Import realm
 #      - name: Set up JDK
