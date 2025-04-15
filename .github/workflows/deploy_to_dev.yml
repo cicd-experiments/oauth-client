@@ -41,16 +41,16 @@ jobs:
           keycloak/keycloak:26.1 \
           start-dev --import-realm
 
-#      - name: Wait for Keycloak to be ready
-#        run: |
-#          for i in {1..30}; do
-#            if curl -s http://localhost:9000/health > /dev/null; then
-#              echo "Keycloak is ready!"
-#              break
-#            fi
-#            echo "Waiting for Keycloak to start..."
-#            sleep 5
-#          done
+      - name: Wait for Keycloak to be ready
+        run: |
+          for i in {1..30}; do
+            if curl -s http://localhost:9000/health > /dev/null; then
+              echo "Keycloak is ready!"
+              break
+            fi
+            echo "Waiting for Keycloak to start..."
+            sleep 5
+          done
 
       - name: ls -la
         run: |
