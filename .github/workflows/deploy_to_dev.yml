@@ -21,8 +21,8 @@ jobs:
 #        run: ./mvnw checkstyle:check
   test:
     environment: develop
- #   permissions:
- #     contents: read
+    permissions:
+      contents: read
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
