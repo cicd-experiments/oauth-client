@@ -62,7 +62,7 @@ jobs:
 
       - name: Check realm.json
         run: |
-          cat /workspace/src/main/resources/keycloak/realm.json
+          cat src/main/resources/keycloak/realm.json
 
 #      - name: Check well-known
 #        run: |
