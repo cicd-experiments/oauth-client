@@ -58,7 +58,7 @@ jobs:
 
       - name: ls -la 2
         run: |
-          ls -la -R src
+          ls -la -R src/main/resources/keycloak
 
       - name: Check realm.json
         run: |
