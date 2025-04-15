@@ -69,7 +69,7 @@ jobs:
       - name: Run test
         run: |
           ./mvnw -B \
-          -DOAUTH_CLIENT_ISSUER_URI=http://localhost:8090/realms/testrealm \
+          -DISSUER_URI=http://localhost:8090/realms/testrealm \
           test --file pom.xml
   build_artifact:
     name: Build artifact
