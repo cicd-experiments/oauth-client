@@ -3,6 +3,7 @@ on: workflow_dispatch
 permissions: {}
 jobs:
   checkstyle:
+    name: Checkstyle
     environment: develop
     permissions:
       contents: read
@@ -20,6 +21,7 @@ jobs:
       - name: Run Checkstyle
         run: ./mvnw checkstyle:check
   test:
+    name: Test
     environment: develop
     permissions:
       contents: read
@@ -67,6 +69,7 @@ jobs:
           -DOAUTH_CLIENT_ISSUER_URI=http://localhost:8090/realms/testrealm \
           test --file pom.xml
   build_artifact:
+    name: Build artifact
     permissions:
       contents: read
       packages: write
@@ -99,6 +102,7 @@ jobs:
             target/*.jar
             Dockerfile
   build_and_push_image:
+    name: Build and push image
     environment: develop
     permissions:
       contents: read
@@ -123,3 +127,30 @@ jobs:
           context: .
           push: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest
+#  run_image_on_server:
+#    permissions:
+#      contents: read
+#    needs:
+#      - Build_and_push_image
+#    runs-on: ubuntu-22.04
+#    steps:
+#      - name: execute docker run on server
+#        uses: appleboy/ssh-action@v1
+#        with:
+#          host: ${{ secrets.SSH_HOST }}
+#          username: ${{ secrets.SSH_USER }}
+#          key: ${{ secrets.SSH_PRIVATE_KEY }}
+#          port: ${{ secrets.SSH_PORT }}
+#          script: |
+#            docker container inspect ${{ vars.IMAGE_NAME }}:latest &> /dev/null && docker stop ${{ vars.IMAGE_NAME }}:latest
+#            docker pull ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.IMAGE_NAME }}:latest
+#            docker run --rm -d \
+#              -p 8765:8080 \
+#              -e DATABASE_URL=database \
+#              -e DATABASE_NAME=cicd \
+#              -e DATABASE_USER=${{ secrets.DATABASE_USER }} \
+#              -e DATABASE_PASS=${{ secrets.DATABASE_PASS }} \
+#              --network database \
+#              --name ${{ vars.IMAGE_NAME }} \
+#              ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.IMAGE_NAME }}:latest
+
