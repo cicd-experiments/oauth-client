@@ -2,23 +2,23 @@ name: Deploy oauth-client to the development stand
 on: workflow_dispatch
 permissions: {}
 jobs:
-#  checkstyle:
-#    environment: develop
-#    permissions:
-#      contents: read
-#    runs-on: ubuntu-22.04
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v4
-#      - name: Make maven wrapper executable
-#        run: chmod +x mvnw
-#      - name: Cache maven packages
-#        uses: actions/cache@v3
-#        with:
-#          path: ~/.m2/repository
-#          key: "${{ runner.os }}-m2-checksytle-${{ hashFiles('**/pom.xml') }}"
-#      - name: Run Checkstyle
-#        run: ./mvnw checkstyle:check
+  checkstyle:
+    environment: develop
+    permissions:
+      contents: read
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Make maven wrapper executable
+        run: chmod +x mvnw
+      - name: Cache maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: "${{ runner.os }}-m2-checksytle-${{ hashFiles('**/pom.xml') }}"
+      - name: Run Checkstyle
+        run: ./mvnw checkstyle:check
   test:
     environment: develop
     permissions:
@@ -27,7 +27,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
       - name: Run Keycloak container
         run: |
           docker run -d \
@@ -40,7 +39,6 @@ jobs:
           -v ./src/main/resources/keycloak:/opt/keycloak/data/import \
           keycloak/keycloak:26.1 \
           start-dev --import-realm
-
       - name: Wait for Keycloak to be ready
         run: |
           for i in {1..30}; do
@@ -51,35 +49,6 @@ jobs:
             echo "Waiting for Keycloak to start..."
             sleep 5
           done
-
-      - name: Check keycloak logs
-        run: |
-          docker logs testkeycloak
-
-      - name: ls -la
-        run: |
-          ls -la
-
-      - name: ls -la 2
-        run: |
-          ls -la -R src/main/resources/keycloak
-
-      - name: readlink
-        run: |
-          readlink -e src/main/resources/keycloak
-
-      - name: github path
-        run: |
-          echo ${{ github.action_path }}
-
-      - name: Check realm.json
-        run: |
-          cat src/main/resources/keycloak/realm.json
-
-      - name: Check well-known
-        run: |
-          curl http://localhost:8090/realms/testrealm/.well-known/openid-configuration
-
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
