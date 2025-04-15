@@ -75,19 +75,33 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: abc
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Make maven wrapper executable
+        run: chmod +x mvnw
+      - name: Cache maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: "${{ runner.os }}-m2-build-${{ hashFiles('**/pom.xml') }}"
+      - name: Run build
         run: |
-          echo ${{ github.event.repository.name }}
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Build and push image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          push: true
-          tags: '${{ vars.DOCKERHUB_USERNAME }}/oauth-client:latest'
+          ./mvnw -B \
+          -Dmaven.test.skip=true \
+          package --file pom.xml
+#      - name: Login to Docker Hub
+#        uses: docker/login-action@v3
+#        with:
+#          username: ${{ vars.DOCKERHUB_USERNAME }}
+#          password: ${{ secrets.DOCKERHUB_TOKEN }}
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v3
+#      - name: Build and push image
+#        uses: docker/build-push-action@v6
+#        with:
+#          context: .
+#          push: true
+#          tags: '${{ vars.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest'
