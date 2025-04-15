@@ -64,9 +64,9 @@ jobs:
         run: |
           cat src/main/resources/keycloak/realm.json
 
-#      - name: Check well-known
-#        run: |
-#          curl http://localhost:8090/realms/testrealm/.well-known/openid-configuration
+      - name: Check well-known
+        run: |
+          curl http://localhost:8090/realms/testrealm/.well-known/openid-configuration
 
 #      - name: Set up JDK
 #        uses: actions/setup-java@v4
