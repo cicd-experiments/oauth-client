@@ -80,23 +80,23 @@ jobs:
         run: |
           curl http://localhost:8090/realms/testrealm/.well-known/openid-configuration
 
-#      - name: Set up JDK
-#        uses: actions/setup-java@v4
-#        with:
-#          java-version: '17'
-#          distribution: 'temurin'
-#      - name: Make maven wrapper executable
-#        run: chmod +x mvnw
-#      - name: Cache maven packages
-#        uses: actions/cache@v3
-#        with:
-#          path: ~/.m2/repository
-#          key: "${{ runner.os }}-m2-test-${{ hashFiles('**/pom.xml') }}"
-#      - name: Run test
-#        run: |
-#          ./mvnw -B \
-#          -DOAUTH_CLIENT_ISSUER_URI=http://localhost:8090/realms/testrealm \
-#          test --file pom.xml
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Make maven wrapper executable
+        run: chmod +x mvnw
+      - name: Cache maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: "${{ runner.os }}-m2-test-${{ hashFiles('**/pom.xml') }}"
+      - name: Run test
+        run: |
+          ./mvnw -B \
+          -DOAUTH_CLIENT_ISSUER_URI=http://localhost:8090/realms/testrealm \
+          test --file pom.xml
 
 
 
