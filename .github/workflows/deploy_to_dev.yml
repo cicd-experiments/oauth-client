@@ -144,6 +144,7 @@ jobs:
       - name: Create .env file
         run: |
           echo "APP_PORT=${{ vars.OAUTH_CLIENT_PORT }}" > ${{ env.ENV_FILENAME }}
+          echo "OAUTH_CLIENT_ISSUER_URI=http://iam-tool:8090/realms/cicd" >> ${{ env.ENV_FILENAME }}
       - name: Copy files via ssh password
         uses: appleboy/scp-action@v0.1.7
         with:
