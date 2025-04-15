@@ -1,5 +1,6 @@
 services:
   oauth-client:
+    pull_policy: always
     image: dipdeepcode/oauth-client:latest
     container_name: oauth-client
     restart: unless-stopped
