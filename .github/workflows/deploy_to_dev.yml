@@ -66,7 +66,7 @@ jobs:
           ./mvnw -B \
           -DOAUTH_CLIENT_ISSUER_URI=http://localhost:8090/realms/testrealm \
           test --file pom.xml
-  build_and_push_iam-tool_image:
+  build_and_push_image:
     environment: develop
     permissions:
       contents: read
