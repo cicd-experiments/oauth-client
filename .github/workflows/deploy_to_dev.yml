@@ -2,6 +2,7 @@ name: Deploy oauth-client to the development stand
 on: workflow_dispatch
 permissions: {}
 env:
+  ENV_FILENAME: .env
   COMPOSE_FILENAME: compose.yml
 jobs:
   checkstyle:
@@ -140,6 +141,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Create .env file
+        run: |
+          echo "APP_PORT=${{ vars.OAUTH_CLIENT_PORT }}" > ${{ env.ENV_FILENAME }}
       - name: Copy files via ssh password
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -147,7 +151,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
-          source: "${{ env.COMPOSE_FILENAME }}"
+          source: "${{ env.ENV_FILENAME }},${{ env.COMPOSE_FILENAME }}"
           target: ${{ vars.PROJECT_DIR }}
       - name: Compose up
         uses: appleboy/ssh-action@v1
@@ -158,5 +162,5 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ${{ vars.PROJECT_DIR }}
-            docker compose up -d
+            docker compose --env-file ${{ env.ENV_FILENAME }} up -d
 
