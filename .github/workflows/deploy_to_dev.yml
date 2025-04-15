@@ -1,6 +1,6 @@
 name: Deploy oauth-client to the development stand
 on: workflow_dispatch
-# permissions: {}
+permissions: {}
 jobs:
 #  checkstyle:
 #    environment: develop
