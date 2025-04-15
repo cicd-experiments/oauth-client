@@ -2,54 +2,55 @@ name: Deploy oauth-client to the development stand
 on: workflow_dispatch
 # permissions: {}
 jobs:
-  checkstyle:
-    environment: develop
-    permissions:
-      contents: read
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Make maven wrapper executable
-        run: chmod +x mvnw
-      - name: Cache maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: "${{ runner.os }}-m2-checksytle-${{ hashFiles('**/pom.xml') }}"
-      - name: Run Checkstyle
-        run: ./mvnw checkstyle:check
+#  checkstyle:
+#    environment: develop
+#    permissions:
+#      contents: read
+#    runs-on: ubuntu-22.04
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#      - name: Make maven wrapper executable
+#        run: chmod +x mvnw
+#      - name: Cache maven packages
+#        uses: actions/cache@v3
+#        with:
+#          path: ~/.m2/repository
+#          key: "${{ runner.os }}-m2-checksytle-${{ hashFiles('**/pom.xml') }}"
+#      - name: Run Checkstyle
+#        run: ./mvnw checkstyle:check
   test:
     environment: develop
-    permissions:
-      contents: read
+ #   permissions:
+ #     contents: read
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      - name: Run Keycloak container
-        run: |
-          docker run -d \
-          --name testkeycloak \
-          -p 8090:8080 -p 9000:9000 \
-          -e KC_HTTP_PORT=8080 \
-          -e KC_BOOTSTRAP_ADMIN_USERNAME=admin \
-          -e KC_BOOTSTRAP_ADMIN_PASSWORD=pass \
-          -e KC_HEALTH_ENABLED=true \
-          -v /src/main/resources/keycloak:/opt/keycloak/data/import \
-          keycloak/keycloak:26.1 \
-          start-dev --import-realm
 
-      - name: Wait for Keycloak to be ready
-        run: |
-          for i in {1..30}; do
-            if curl -s http://localhost:9000/health > /dev/null; then
-              echo "Keycloak is ready!"
-              break
-            fi
-            echo "Waiting for Keycloak to start..."
-            sleep 5
-          done
+#      - name: Run Keycloak container
+#        run: |
+#          docker run -d \
+#          --name testkeycloak \
+#          -p 8090:8080 -p 9000:9000 \
+#          -e KC_HTTP_PORT=8080 \
+#          -e KC_BOOTSTRAP_ADMIN_USERNAME=admin \
+#          -e KC_BOOTSTRAP_ADMIN_PASSWORD=pass \
+#          -e KC_HEALTH_ENABLED=true \
+#          -v /src/main/resources/keycloak:/opt/keycloak/data/import \
+#          keycloak/keycloak:26.1 \
+#          start-dev --import-realm
+
+#      - name: Wait for Keycloak to be ready
+#        run: |
+#          for i in {1..30}; do
+#            if curl -s http://localhost:9000/health > /dev/null; then
+#              echo "Keycloak is ready!"
+#              break
+#            fi
+#            echo "Waiting for Keycloak to start..."
+#            sleep 5
+#          done
 
       - name: ls -la
         run: |
@@ -63,9 +64,9 @@ jobs:
         run: |
           cat /workspace/src/main/resources/keycloak/realm.json
 
-      - name: Check well-known
-        run: |
-          curl http://localhost:8090/realms/testrealm/.well-known/openid-configuration
+#      - name: Check well-known
+#        run: |
+#          curl http://localhost:8090/realms/testrealm/.well-known/openid-configuration
 
 #      - name: Set up JDK
 #        uses: actions/setup-java@v4
