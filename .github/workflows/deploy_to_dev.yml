@@ -1,6 +1,8 @@
 name: Deploy oauth-client to the development stand
 on: workflow_dispatch
 permissions: {}
+env:
+  COMPOSE_FILENAME: compose.yml
 jobs:
   checkstyle:
     name: Checkstyle
@@ -127,30 +129,34 @@ jobs:
           context: .
           push: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest
-#  run_image_on_server:
-#    permissions:
-#      contents: read
-#    needs:
-#      - Build_and_push_image
-#    runs-on: ubuntu-22.04
-#    steps:
-#      - name: execute docker run on server
-#        uses: appleboy/ssh-action@v1
-#        with:
-#          host: ${{ secrets.SSH_HOST }}
-#          username: ${{ secrets.SSH_USER }}
-#          key: ${{ secrets.SSH_PRIVATE_KEY }}
-#          port: ${{ secrets.SSH_PORT }}
-#          script: |
-#            docker container inspect ${{ vars.IMAGE_NAME }}:latest &> /dev/null && docker stop ${{ vars.IMAGE_NAME }}:latest
-#            docker pull ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.IMAGE_NAME }}:latest
-#            docker run --rm -d \
-#              -p 8765:8080 \
-#              -e DATABASE_URL=database \
-#              -e DATABASE_NAME=cicd \
-#              -e DATABASE_USER=${{ secrets.DATABASE_USER }} \
-#              -e DATABASE_PASS=${{ secrets.DATABASE_PASS }} \
-#              --network database \
-#              --name ${{ vars.IMAGE_NAME }} \
-#              ${{ vars.DOCKERHUB_USERNAME }}/${{ vars.IMAGE_NAME }}:latest
+  deploy_service:
+    name: Deploy service
+    environment: develop
+    permissions:
+      contents: read
+    needs:
+      - build_and_push_image
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Copy files via ssh password
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          source: "${{ env.COMPOSE_FILENAME }}"
+          target: ${{ vars.PROJECT_DIR }}
+      - name: Compose up
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ${{ vars.PROJECT_DIR }}
+            docker compose up -d
 
