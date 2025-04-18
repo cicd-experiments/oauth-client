@@ -1,5 +1,8 @@
 name: Deploy oauth-client to the development stand
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - develop
 permissions: {}
 env:
   ENV_FILENAME: .env
@@ -75,6 +78,7 @@ jobs:
           test --file pom.xml
   build_artifact:
     name: Build artifact
+    environment: develop
     permissions:
       contents: read
       packages: write
@@ -149,7 +153,7 @@ jobs:
           echo "APP_PORT=${{ vars.OAUTH_CLIENT_PORT }}" > ${{ env.ENV_FILENAME }}
           echo "CONTAINER_NAME=${{ env.CONTAINER_NAME }}" >> ${{ env.ENV_FILENAME }}
           echo "IMAGE=${{ env.IMAGE }}" >> ${{ env.ENV_FILENAME }}
-          echo "ISSUER_URI=http://iam-tool:8090/realms/cicd" >> ${{ env.ENV_FILENAME }}
+          echo "ISSUER_URI=http://iam-tool:8080/realms/cicd" >> ${{ env.ENV_FILENAME }}
       - name: Copy files via ssh password
         uses: appleboy/scp-action@v0.1.7
         with:
