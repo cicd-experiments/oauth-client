@@ -1,8 +1,8 @@
 services:
   oauth-client:
     pull_policy: always
-    image: dipdeepcode/oauth-client:latest
-    container_name: oauth-client
+    image: ${IMAGE}
+    container_name: ${CONTAINER_NAME}
     restart: unless-stopped
     environment:
       - ISSUER_URI=${ISSUER_URI}
