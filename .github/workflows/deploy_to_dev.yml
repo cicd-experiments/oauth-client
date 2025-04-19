@@ -155,6 +155,7 @@ jobs:
           echo "IMAGE=${{ env.IMAGE }}" >> ${{ env.ENV_FILENAME }}
           echo "ISSUER_URI=http://iam-tool:8080/realms/cicd" >> ${{ env.ENV_FILENAME }}
           echo "REDIRECT_URI=https://dipdeepcode.ru" >> ${{ env.ENV_FILENAME }}
+          echo "CLIENT_ID=cicd-client" >> ${{ env.ENV_FILENAME }}
       - name: Copy files via ssh password
         uses: appleboy/scp-action@v0.1.7
         with:
