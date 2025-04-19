@@ -1,6 +1,8 @@
 spring:
   application:
     name: oauth-client
+  profiles:
+    active: develop
   security:
     oauth2:
       client:

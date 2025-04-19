@@ -154,6 +154,7 @@ jobs:
           echo "CONTAINER_NAME=${{ env.CONTAINER_NAME }}" >> ${{ env.ENV_FILENAME }}
           echo "IMAGE=${{ env.IMAGE }}" >> ${{ env.ENV_FILENAME }}
           echo "ISSUER_URI=http://iam-tool:8080/realms/cicd" >> ${{ env.ENV_FILENAME }}
+          echo "REDIRECT_URI=https://dipdeepcode.ru" >> ${{ env.ENV_FILENAME }}
       - name: Copy files via ssh password
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -173,6 +174,7 @@ jobs:
           script: |
             cd ${{ vars.PROJECT_DIR }}
             docker compose --env-file ${{ env.ENV_FILENAME }} down
+            docker image rm ${{ env.IMAGE }} 2> /dev/null
             docker compose --env-file ${{ env.ENV_FILENAME }} up -d
   service_healthcheck:
     name: Service healthcheck
