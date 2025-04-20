@@ -10,8 +10,8 @@ public class HomeController {
      * Test controller.
      * @return index.html
      */
-    @GetMapping("/")
+    @GetMapping("/home")
     public String home() {
-        return "index.html";
+        return "home";
     }
 }

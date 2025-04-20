@@ -8,16 +8,16 @@ spring:
       client:
         registration:
           iam-tool:
-#            authorization-grant-type: flow
-            client-id: ${CLIENT_ID}
-#            client-name: ${OAUTH_CLIENT_NAME}
-#            client-secret: ${OAUTH_CLIENT_SECRET}
             provider: keycloak
-#            client-authentication-method: client_secret_basic
-#            redirect-uri: ${REDIRECT_URI}
+            authorization-grant-type: authorization_code
+            client-id: ${OAUTH_CLIENT_ID}
+            client-name: ${OAUTH_CLIENT_NAME}
+            client-secret: ${OAUTH_CLIENT_SECRET}
+            client-authentication-method: client_secret_basic
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             scope:
               - openid
         provider:
           keycloak:
-            issuer-uri: ${ISSUER_URI}
+            issuer-uri: ${OAUTH_ISSUER_URI}
 
