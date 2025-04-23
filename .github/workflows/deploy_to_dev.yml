@@ -76,7 +76,7 @@ jobs:
         run: |
           ./mvnw -B \
           -DIAM_TOOL_HOSTNAME=http://localhost:8090 \
-          -IAM_REALM_NAME=testrealm \
+          -DIAM_REALM_NAME=testrealm \
           test --file pom.xml
   build_artifact:
     name: Build artifact
