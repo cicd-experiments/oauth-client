@@ -75,7 +75,8 @@ jobs:
       - name: Run test
         run: |
           ./mvnw -B \
-          -DOAUTH_ISSUER_URI=http://localhost:8090/realms/testrealm \
+          -DIAM_TOOL_HOSTNAME=http://localhost:8090 \
+          -IAM_REALM_NAME=testrealm \
           test --file pom.xml
   build_artifact:
     name: Build artifact
