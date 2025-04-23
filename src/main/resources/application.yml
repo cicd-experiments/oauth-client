@@ -11,7 +11,7 @@ spring:
 #            client-secret: ${OAUTH_CLIENT_SECRET}
             provider: keycloak
 #            client-authentication-method: client_secret_basic
-            redirect-uri: "{baseUrl}"
+            redirect-uri: ${REDIRECT_URI}
             scope:
               - openid
         provider:
