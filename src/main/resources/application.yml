@@ -1,5 +1,5 @@
 server:
-  forward-headers-strategy: NATIVE
+  forward-headers-strategy: native
 spring:
   application:
     name: oauth-client
@@ -9,17 +9,16 @@ spring:
     oauth2:
       client:
         registration:
-          iam-tool:
+          ${OAUTH_REGISTRATION_ID}:
             provider: keycloak
             authorization-grant-type: authorization_code
             client-id: ${OAUTH_CLIENT_ID}
             client-name: ${OAUTH_CLIENT_NAME}
             client-secret: ${OAUTH_CLIENT_SECRET}
             client-authentication-method: client_secret_basic
-            redirect-uri: https://dipdeepcode.ru/login/oauth2/code/iam-tool
+            redirect-uri: ${OAUTH_HOSTNAME}/login/oauth2/code/${OAUTH_REGISTRATION_ID}
             scope:
               - openid
         provider:
           keycloak:
-            issuer-uri: ${OAUTH_ISSUER_URI}
-
+            issuer-uri: ${IAM_TOOL_HOSTNAME}/realms/${IAM_REALM_NAME}

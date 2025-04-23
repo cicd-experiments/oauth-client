@@ -159,7 +159,10 @@ jobs:
           echo "OAUTH_CLIENT_ID=${{ vars.OAUTH_CLIENT_ID }}" > ${{ env.APP_ENV_FILENAME }}
           echo "OAUTH_CLIENT_NAME=${{ vars.OAUTH_CLIENT_NAME }}" >> ${{ env.APP_ENV_FILENAME }}
           echo "OAUTH_CLIENT_SECRET=${{ secrets.OAUTH_CLIENT_SECRET }}" >> ${{ env.APP_ENV_FILENAME }}
-          echo "OAUTH_ISSUER_URI=${{ vars.IAM_TOOL_HOSTNAME }}/realms/${{ vars.IAM_REALM_NAME }}" >> ${{ env.APP_ENV_FILENAME }}
+          echo "IAM_REALM_NAME=${{ vars.IAM_REALM_NAME }}" >> ${{ env.APP_ENV_FILENAME }}
+          echo "IAM_TOOL_HOSTNAME=${{ vars.IAM_TOOL_HOSTNAME }}" >> ${{ env.APP_ENV_FILENAME }}
+          echo "OAUTH_HOSTNAME=${{ vars.OAUTH_HOSTNAME }}" >> ${{ env.APP_ENV_FILENAME }}
+          echo "OAUTH_REGISTRATION_ID=${{ vars.OAUTH_REGISTRATION_ID }}" >> ${{ env.APP_ENV_FILENAME }}
       - name: Copy files via ssh password
         uses: appleboy/scp-action@v0.1.7
         with:
