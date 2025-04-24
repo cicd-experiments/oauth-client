@@ -28,7 +28,9 @@ public class SecurityConfig {
         http.logout(logout -> logout
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .deleteCookies("JSESSIONID"));
+                .deleteCookies("JSESSIONID", "AUTH_SESSION_ID", "KC_RESTART",
+                        "KEYCLOAK_IDENTITY", "KEYCLOAK_SESSION"));
+
 
         http.authorizeHttpRequests(ex -> ex
                 .requestMatchers("/", "/index.html", "/favicon.ico").permitAll()
