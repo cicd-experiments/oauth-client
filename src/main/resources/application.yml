@@ -9,14 +9,14 @@ spring:
     oauth2:
       client:
         registration:
-          ${OAUTH_REGISTRATION_ID}:
+          iam-tool:
             provider: keycloak
             authorization-grant-type: authorization_code
             client-id: ${OAUTH_CLIENT_ID}
             client-name: ${OAUTH_CLIENT_NAME}
             client-secret: ${OAUTH_CLIENT_SECRET}
             client-authentication-method: client_secret_basic
-            redirect-uri: ${OAUTH_HOSTNAME}/login/oauth2/code/${OAUTH_REGISTRATION_ID}
+            redirect-uri: ${OAUTH_HOSTNAME}/login/oauth2/code/iam-tool
             scope:
               - openid
         provider:
