@@ -25,6 +25,11 @@ public class SecurityConfig {
 
         http.oauth2Login(Customizer.withDefaults());
 
+        http.logout(logout -> logout
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .deleteCookies("JSESSIONID"));
+
         http.authorizeHttpRequests(ex -> ex
                 .requestMatchers("/", "/index.html", "/favicon.ico").permitAll()
                 .anyRequest().authenticated());
